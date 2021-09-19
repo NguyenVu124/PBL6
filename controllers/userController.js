@@ -8,6 +8,6 @@ exports.createUser = async (req, res) => {
     res.status(201).send();
   } catch (error) {
     console.log(error);
-    res.status(400).send();
+    res.status(400).send(error);
   }
 };
