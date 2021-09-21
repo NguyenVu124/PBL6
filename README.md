@@ -1,2 +1,2 @@
 # PBL6
-Repository for server and web client
+Repository for server PBL6

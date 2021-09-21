@@ -11,5 +11,11 @@ const Feedback = new mongoose.Schema({
   createdAt: {
     type: Date,
   },
+  restaurant: {
+    type: mongoose.Types.ObjectId,
+    ref: "Restaurant",
+  },
+  selfVehicle: { type: mongoose.Types.ObjectId, ref: "SelfVehicle" },
+  hotel: { type: mongoose.Types.ObjectId, ref: "Hotel" },
 });
-module.exports = mongoose.model("feedback", Feedback);
+module.exports = mongoose.model("Feedback", Feedback);
