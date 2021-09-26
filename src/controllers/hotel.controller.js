@@ -1,29 +1,74 @@
-const Hotel = require('../models/Hotel');
-const Room = require('../models/Room');
+const httpStatus = require('http-status');
+// const pick = require('../utils/pick');
+const ApiError = require('../utils/ApiError');
+const catchAsync = require('../utils/catchAsync');
+const { hotelService } = require('../services');
 
-exports.createHotel = async (req, res) => {
-  try {
-    const hotel = new Hotel(req.body);
-    console.log(req.body);
-    await hotel.save();
-    res.status(201).send();
-  } catch (error) {
-    console.log(error);
-    res.status(400).send();
-  }
-};
-exports.createRoom = async (req, res) => {
-  try {
-    const room = new Room(req.body);
-    console.log(req.body);
-    await room.save();
-    res.status(201).send();
-  } catch (error) {
-    console.log(error);
-    res.status(400).send();
-  }
-};
+const createHotel = catchAsync(async (req, res) => {
+  const hotel = await hotelService.createHotel(req.body);
+  res.status(httpStatus.CREATED).send(hotel);
+});
 
-exports.listHotel = async (req, res) => {
-  res.send('Hotels');
+const getHotels = catchAsync(async (req, res) => {
+  const result = await hotelService.getHotels();
+  res.send(result);
+});
+
+const getHotel = catchAsync(async (req, res) => {
+  const hotel = await hotelService.getHotelById(req.params.hotelId);
+  if (!hotel) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Hotel not found');
+  }
+  res.send(hotel);
+});
+
+const updateHotel = catchAsync(async (req, res) => {
+  const hotel = await hotelService.updateHotelById(req.params.hotelId, req.body);
+  res.send(hotel);
+});
+
+const deleteHotel = catchAsync(async (req, res) => {
+  await hotelService.deleteHotelById(req.params.hotelId);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
+const createRoom = catchAsync(async (req, res) => {
+  const room = await hotelService.createRoom(req.body);
+  res.status(httpStatus.CREATED).send(room);
+});
+
+const getRooms = catchAsync(async (req, res) => {
+  const result = await hotelService.getRooms(req.params.hotelId);
+  res.send(result);
+});
+
+const getRoom = catchAsync(async (req, res) => {
+  const room = await hotelService.getRoomById(req.params.roomId);
+  if (!room) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Room not found');
+  }
+  res.send(room);
+});
+
+const updateRoom = catchAsync(async (req, res) => {
+  const room = await hotelService.updateRoomById(req.params.roomId, req.body);
+  res.send(room);
+});
+
+const deleteRoom = catchAsync(async (req, res) => {
+  await hotelService.deleteRoomById(req.params.roomId);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
+module.exports = {
+  createHotel,
+  getHotels,
+  getHotel,
+  updateHotel,
+  deleteHotel,
+  getRooms,
+  createRoom,
+  getRoom,
+  updateRoom,
+  deleteRoom,
 };

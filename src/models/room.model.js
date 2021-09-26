@@ -7,6 +7,7 @@ const Room = new mongoose.Schema({
   price: { type: Number },
   type: { type: String, enum: types },
   images: [{ type: String }],
+  available: [{ type: Date }],
 });
 
 module.exports = mongoose.model('Room', Room);

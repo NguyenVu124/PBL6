@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const { toJSON, paginate } = require('./plugins');
-const { roles } = require('../config/defaultValue');
+const { toJSON } = require('./plugins');
+const { roles, gender, types } = require('../config/defaultValue');
 
 const userSchema = mongoose.Schema(
   {
@@ -55,7 +55,7 @@ const userSchema = mongoose.Schema(
       //   }
       // },
     },
-    typeBusiness: { type: String, enum: type },
+    typeBusiness: { type: String, enum: types },
     businessIdentifier: {
       type: String,
     },
