@@ -1,6 +1,6 @@
-const roles = ['Guest', 'Admin', 'Partner'];
-const types = ['Hotel', 'Restaurant', 'Self vehicle', 'Bus'];
-const gender = ['Male', 'Female'];
+const roles = ['guest', 'admin', 'partner'];
+const types = ['hotel', 'restaurant', 'self vehicle', 'bus'];
+const gender = ['male', 'female'];
 
 module.exports = {
   roles,

@@ -9,8 +9,9 @@ const createUser = async (userBody) => {
   return User.create(userBody);
 };
 
-const queryUsers = async (filter, options) => {
-  const users = await User.paginate(filter, options);
+const queryUsers = async () => {
+  // const users = await User.paginate(filter, options);
+  const users = await User.find();
   return users;
 };
 

@@ -7,10 +7,10 @@ const register = {
     password: Joi.string().required().custom(password),
     name: Joi.string().required(),
     role: Joi.string().required(),
-    birth: Joi.string().required(),
-    phone: Joi.string().required(),
-    gender: Joi.string().required(),
-    identityNumber: Joi.string().required(),
+    birth: Joi.string(),
+    phone: Joi.string(),
+    gender: Joi.string(),
+    identityNumber: Joi.string(),
   }),
 };
 
