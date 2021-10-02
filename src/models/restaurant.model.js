@@ -11,6 +11,23 @@ const Restaurant = new mongoose.Schema({
       ref: 'FeedBack',
     },
   ],
+  priceFrom: {
+    type: Number,
+    required: true,
+  },
+  priceTo: {
+    type: Number,
+    required: true,
+  },
+  vote: {
+    type: Number,
+  },
+  tables: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Table',
+  },
+  images: [{ type: String }],
+  imageCover: { type: String, required: true },
 });
 
 module.exports = mongoose.model('Restaurant', Restaurant);
