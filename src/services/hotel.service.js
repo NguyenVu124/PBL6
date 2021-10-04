@@ -25,6 +25,12 @@ const updateHotelById = async (hotelId, updateBody) => {
   return hotel;
 };
 
+const deleteAllRoomsOfHotel = async (hotelId) => {
+  await Room.remove({ hotel: hotelId }, (err) => {
+    if (err) throw new ApiError(httpStatus.NOT_FOUND, `${err}`);
+  });
+};
+
 const deleteHotelById = async (hotelId) => {
   const hotel = await getHotelById(hotelId);
   if (!hotel) {
@@ -38,6 +44,18 @@ const getRooms = async (hotelId) => {
   const roomsId = await Hotel.findById(hotelId).select('rooms');
   const rooms = await Room.find({ _id: roomsId.rooms });
   return rooms;
+};
+
+const addRoomToHotel = async (roomId, hotelId) => {
+  const hotel = await getHotelById(hotelId);
+  if (!hotel) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Hotel not found');
+  }
+  const { rooms } = hotel;
+  rooms.push(roomId);
+  const updateBody = { rooms };
+  Object.assign(hotel, updateBody);
+  await hotel.save();
 };
 
 const createRoom = async (roomBody) => {
@@ -72,7 +90,9 @@ module.exports = {
   getHotels,
   getHotelById,
   updateHotelById,
+  deleteAllRoomsOfHotel,
   deleteHotelById,
+  addRoomToHotel,
   getRooms,
   createRoom,
   getRoomById,

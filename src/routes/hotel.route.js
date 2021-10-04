@@ -1,23 +1,24 @@
 const express = require('express');
 const { hotelController } = require('../controllers');
+const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.route('/').post(hotelController.createHotel).get(hotelController.getHotels);
+router.route('/').post(auth('createHotel'), hotelController.createHotel).get(hotelController.getHotels);
 router
   .route('/:hotelId')
   .get(hotelController.getHotel)
-  .patch(hotelController.updateHotel)
-  .delete(hotelController.deleteHotel);
+  .patch(auth('updateHotel'), hotelController.updateHotel)
+  .delete(auth('deleteHotel'), hotelController.deleteHotel);
 
 router.route('/:hotelId/room').get(hotelController.getRooms);
 
-router.route('/room').post(hotelController.createRoom);
+router.route('/room').post(auth('createRoom'), hotelController.createRoom);
 
 router
   .route('/room/:roomId')
   .get(hotelController.getRoom)
-  .patch(hotelController.updateRoom)
-  .delete(hotelController.deleteRoom);
+  .patch(auth('updateRoom'), hotelController.updateRoom)
+  .delete(auth('deleteRoom'), hotelController.deleteRoom);
 
 module.exports = router;

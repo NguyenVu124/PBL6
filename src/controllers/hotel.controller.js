@@ -1,5 +1,4 @@
 const httpStatus = require('http-status');
-// const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { hotelService } = require('../services');
@@ -29,11 +28,13 @@ const updateHotel = catchAsync(async (req, res) => {
 
 const deleteHotel = catchAsync(async (req, res) => {
   await hotelService.deleteHotelById(req.params.hotelId);
+  await hotelService.deleteAllRoomsOfHotel(req.params.hotelId);
   res.status(httpStatus.NO_CONTENT).send();
 });
 
 const createRoom = catchAsync(async (req, res) => {
   const room = await hotelService.createRoom(req.body);
+  await hotelService.addRoomToHotel(room._id, req.body.hotel);
   res.status(httpStatus.CREATED).send(room);
 });
 
