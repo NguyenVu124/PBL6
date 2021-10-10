@@ -66,6 +66,7 @@ const userSchema = mongoose.Schema(
     identityNumber: {
       type: String,
     },
+    feedbacks: [{ type: mongoose.Types.ObjectId, ref: 'Feedback' }],
   },
   {
     timestamps: true,
