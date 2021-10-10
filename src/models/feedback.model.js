@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const Feedback = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: 'User',
+    },
     service: {
       type: String,
       required: true,
