@@ -12,3 +12,4 @@ router
   .post(auth('createBill'), billController.createBill)
   .patch(auth('updateBill'), billController.updateBill)
   .delete(auth('deleteBill'), billController.deleteBill);
+module.exports = router;

@@ -13,3 +13,4 @@ router
   .post(auth('createFeedback'), feedbackController.createFeedback)
   .patch(auth('updateFeedback'), feedbackController.updateFeedback)
   .delete(auth('deleteFeedback'), feedbackController.deleteFeedback);
+module.exports = router;

@@ -1,5 +1,14 @@
 const allRoles = {
-  guest: ['getUsers', 'manageUsers', 'createBill', 'updateBill', 'getBills'],
+  guest: [
+    'getUsers',
+    'manageUsers',
+    'createBill',
+    'updateBill',
+    'getBills',
+    'createFeedback',
+    'updateFeedback',
+    'deleteFeedback',
+  ],
   admin: [
     'getUsers',
     'manageUsers',
@@ -22,6 +31,9 @@ const allRoles = {
     'updateDetailVehicle',
     'deleteDetailVehicle',
     'deleteBill',
+    'createFeedback',
+    'updateFeedback',
+    'deleteFeedback',
   ],
   partner: [
     'createHotel',
