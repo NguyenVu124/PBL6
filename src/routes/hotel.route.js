@@ -4,7 +4,8 @@ const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.route('/').post(auth('createHotel'), hotelController.createHotel).get(hotelController.getHotels);
+router.route('/:userId').post(auth('createHotel'), hotelController.createHotel);
+router.route('/').get(hotelController.getHotels);
 router
   .route('/:hotelId')
   .get(hotelController.getHotel)

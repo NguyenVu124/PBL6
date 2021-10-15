@@ -33,29 +33,23 @@ const userSchema = mongoose.Schema(
           throw new Error('Password must contain at least one letter and one number');
         }
       },
-      private: true, // used by the toJSON plugin
+      private: true,
     },
     role: {
       type: String,
       enum: roles,
-      default: 'Guest',
+      default: 'guest',
     },
-    // isEmailVerified: {
-    //   type: Boolean,
-    //   default: false,
-    // },
     birth: {
       type: Date,
     },
     phone: {
       type: String,
-      // validate(value) {
-      //   if (!value.match(/((09|03|07|08|05)+([0-9]{8})\b)/g)) {
-      //     throw new Error("Phone number invalid!");
-      //   }
-      // },
     },
     typeBusiness: { type: String, enum: types },
+    idHotel: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' },
+    idSelfVehicle: { type: mongoose.Schema.Types.ObjectId, ref: 'SelfVehicle' },
+    idRestaurant: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' },
     businessIdentifier: {
       type: String,
     },
@@ -77,19 +71,11 @@ const userSchema = mongoose.Schema(
 userSchema.plugin(toJSON);
 // userSchema.plugin(paginate);
 
-/**
- * Check if email is taken
-
- */
 userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
   return !!user;
 };
 
-/**
- * Check if password matches the user's password
-
- */
 userSchema.methods.isPasswordMatch = async function (password) {
   const user = this;
   return bcrypt.compare(password, user.password);

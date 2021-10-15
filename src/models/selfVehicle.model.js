@@ -4,6 +4,7 @@ const types = ['Xe máy', 'Ô tô 7 chỗ', 'Ô tô 4 chỗ', 'Xe đạp'];
 
 const SelfVehicle = new mongoose.Schema({
   type: { type: String, enum: types, required: true, default: 'Xe máy' },
+  idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   feedBacks: [
     {
       type: mongoose.Schema.Types.ObjectId,
