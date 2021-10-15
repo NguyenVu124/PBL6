@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { toJSON } = require('./plugins');
 
+// new model
+
 const hotelSchema = mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
