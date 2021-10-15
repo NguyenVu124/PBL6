@@ -1,10 +1,11 @@
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { hotelService } = require('../services');
+const { hotelService, userService } = require('../services');
 
 const createHotel = catchAsync(async (req, res) => {
   const hotel = await hotelService.createHotel(req.body);
+  await userService.updateUserById(req.params.userId, { idHotel: hotel._id });
   res.status(httpStatus.CREATED).send(hotel);
 });
 

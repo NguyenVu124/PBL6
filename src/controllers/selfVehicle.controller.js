@@ -1,10 +1,12 @@
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { selfVehicleService } = require('../services');
+const { selfVehicleService, userService } = require('../services');
 
 const createSelfVehicle = catchAsync(async (req, res) => {
   const selfVehicle = await selfVehicleService.createSelfVehicle(req.body);
+  await userService.updateUserById(req.params.userId, { idSelfVehicle: selfVehicle._id });
+
   res.status(httpStatus.CREATED).send(selfVehicle);
 });
 

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const Restaurant = new mongoose.Schema({
   city: { type: String, required: true },
+  idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   address: { type: String, required: true },
   totalTables: { type: Number, required: true },
   availableTables: { type: Number, required: true },

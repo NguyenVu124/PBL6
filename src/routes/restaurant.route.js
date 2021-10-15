@@ -4,10 +4,8 @@ const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router
-  .route('/')
-  .post(auth('createRestaurant'), restaurantController.createRestaurant)
-  .get(restaurantController.getRestaurants);
+router.route('/:userId').post(auth('createRestaurant'), restaurantController.createRestaurant);
+router.route('/').get(restaurantController.getRestaurants);
 router
   .route('/:restaurantId')
   .get(restaurantController.getRestaurant)

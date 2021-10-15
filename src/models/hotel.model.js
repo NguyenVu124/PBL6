@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const { toJSON } = require('./plugins');
 
-// new model
-
 const hotelSchema = mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
+    idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     city: { type: String, required: true, trim: true },
     address: {
       type: String,
