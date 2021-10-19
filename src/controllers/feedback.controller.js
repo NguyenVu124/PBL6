@@ -5,6 +5,21 @@ const { feedbackService } = require('../services');
 
 const createFeedback = catchAsync(async (req, res) => {
   const feedback = await feedbackService.createFeedback(req.body);
+  await feedbackService.addFeedbackToService(feedback._id, req.body);
+
+  // switch (req.params.service) {
+  //   case 'restaurant':
+  //     await feedbackService.addFeedbackToRestaurant(feedback._id, req.body.hotel);
+  //     break;
+  //   case 'hotel':
+  //     await feedbackService.addFeedbackToHotel(feedback._id, req.body.hotel);
+  //     break;
+  //   case 'selfVehicle':
+  //     await feedbackService.addFeedbackToSelfVehicle(feedback._id, req.body.hotel);
+  //     break;
+  //   default:
+  //     throw new ApiError(httpStatus.FORBIDDEN, 'Error');
+  // }
   res.status(httpStatus.CREATED).send(feedback);
 });
 

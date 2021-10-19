@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
+const { toJSON } = require('./plugins');
 
-const Feedback = new mongoose.Schema(
+const feedbackSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Types.ObjectId,
-      ref: 'User',
-    },
     service: {
       type: String,
       required: true,
@@ -13,6 +10,10 @@ const Feedback = new mongoose.Schema(
     vote: { type: Number, required: true },
     comment: {
       type: String,
+    },
+    idUser: {
+      type: mongoose.Types.ObjectId,
+      ref: 'User',
     },
     restaurant: {
       type: mongoose.Types.ObjectId,
@@ -25,4 +26,8 @@ const Feedback = new mongoose.Schema(
     timestamps: true,
   }
 );
-module.exports = mongoose.model('Feedback', Feedback);
+
+feedbackSchema.plugin(toJSON);
+const Feedback = mongoose.model('Feedback', feedbackSchema);
+
+module.exports = Feedback;

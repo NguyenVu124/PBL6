@@ -5,12 +5,14 @@ const auth = require('../middlewares/auth');
 const router = express.Router();
 
 router.route('/:userId').get(feedbackController.getFeedbacksByUserId);
-router.route('/:service/:serviceId').get(feedbackController.getFeedbacksByServiceId);
+router
+  .route('/:service/:serviceId')
+  .get(feedbackController.getFeedbacksByServiceId)
+  .post(auth('createFeedback'), feedbackController.createFeedback);
 
 router
-  .route('/:feedbackId')
+  .route('detail/:feedbackId')
   .get(feedbackController.getFeedback)
-  .post(auth('createFeedback'), feedbackController.createFeedback)
   .patch(auth('updateFeedback'), feedbackController.updateFeedback)
   .delete(auth('deleteFeedback'), feedbackController.deleteFeedback);
 module.exports = router;

@@ -1,4 +1,7 @@
 const httpStatus = require('http-status');
+const hotelService = require('./hotel.service');
+const restaurantService = require('./restaurant.service');
+const selfVehicleService = require('./selfVehicle.service');
 const { Feedback } = require('../models');
 const ApiError = require('../utils/ApiError');
 
@@ -7,14 +10,24 @@ const createFeedback = async (feedbackBody) => {
 };
 
 const getFeedbacksByUserId = async (userId) => {
-  const feedbacks = await Feedback.find({ user: userId });
+  const feedbacks = await Feedback.find({ idUser: userId });
   return feedbacks;
 };
 const getFeedbacksByServiceId = async (service, serviceId) => {
   let query = {};
-  if (service === 'restaurant') query = { restaurant: serviceId };
-  if (service === 'hotel') query = { hotel: serviceId };
-  if (service === 'selfVehicle') query = { selfVehicle: serviceId };
+  switch (service) {
+    case 'restaurant':
+      query = { restaurant: serviceId };
+      break;
+    case 'hotel':
+      query = { hotel: serviceId };
+      break;
+    case 'selfVehicle':
+      query = { selfVehicle: serviceId };
+      break;
+    default:
+      break;
+  }
   const feedbacks = await Feedback.find(query);
   return feedbacks;
 };
@@ -42,6 +55,31 @@ const deleteFeedbackById = async (feedbackId) => {
   return feedback;
 };
 
+const addFeedbackToService = async (feedbackId, service) => {
+  let detailService = {};
+  switch (service.service) {
+    case 'restaurant':
+      detailService = await restaurantService.getRestaurantById(service.restaurant);
+      break;
+    case 'hotel':
+      detailService = await hotelService.getHotelById(service.hotel);
+      break;
+    case 'selfVehicle':
+      detailService = await selfVehicleService.getSelfVehicleById(service.selfVehicle);
+      break;
+    default:
+      throw new ApiError(httpStatus.FORBIDDEN, 'Error');
+  }
+  if (!detailService) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Service not found');
+  }
+  const { feedbacks } = detailService;
+  feedbacks.push(feedbackId);
+  const updateBody = { feedbacks };
+  Object.assign(detailService, updateBody);
+  await detailService.save();
+};
+
 module.exports = {
   createFeedback,
   getFeedbacksByUserId,
@@ -49,4 +87,5 @@ module.exports = {
   getFeedbackById,
   updateFeedbackById,
   deleteFeedbackById,
+  addFeedbackToService,
 };
