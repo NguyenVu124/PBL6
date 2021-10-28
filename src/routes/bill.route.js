@@ -9,7 +9,9 @@ router.route('/:userId').get(auth('getBills'), billController.getBills);
 router
   .route('/:userId/:billId')
   .get(auth('getBills'), billController.getBill)
-  .post(auth('createBill'), billController.createBill)
+
   .patch(auth('updateBill'), billController.updateBill)
   .delete(auth('deleteBill'), billController.deleteBill);
+
+router.post(auth('createBill'), billController.createBill);
 module.exports = router;
