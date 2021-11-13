@@ -3,9 +3,11 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const hotelRoute = require('./hotel.route');
 const billRoute = require('./bill.route');
+const docsRoute = require('./docs.route');
 const feedbackRoute = require('./feedback.route');
 const restaurantRoute = require('./restaurant.route');
 const selfVehicleRoute = require('./selfVehicle.route');
+// const config = require('../config/config');
 
 const router = express.Router();
 
@@ -38,10 +40,27 @@ const defaultRoutes = [
     path: '/selfVehicle',
     route: selfVehicleRoute,
   },
+  {
+    path: '/docs',
+    route: docsRoute,
+  },
 ];
+
+// const devRoutes = [
+//   {
+//     path: '/docs',
+//     route: docsRoute,
+//   },
+// ];
 
 defaultRoutes.forEach((route) => {
   router.use(route.path, route.route);
 });
+
+// if (config.env === 'development') {
+//   devRoutes.forEach((route) => {
+//     router.use(route.path, route.route);
+//   });
+// }
 
 module.exports = router;
