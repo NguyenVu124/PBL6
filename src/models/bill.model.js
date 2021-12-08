@@ -10,11 +10,11 @@ const Bill = new mongoose.Schema(
     checkIn: { type: Date },
     checkOut: { type: Date },
     status: { type: Boolean },
+    guest: { type: mongoose.Types.ObjectId, ref: 'User' },
     room: {
       type: mongoose.Types.ObjectId,
       ref: 'Room',
     },
-    guest: { type: mongoose.Types.ObjectId, ref: 'User' },
     table: { type: mongoose.Types.ObjectId, ref: 'Table' },
     detailVehicle: { type: mongoose.Types.ObjectId, ref: 'DetailVehicle' },
   },

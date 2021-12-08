@@ -54,6 +54,7 @@ const allRoles = {
     'createDetailVehicle',
     'updateDetailVehicle',
     'deleteDetailVehicle',
+    'createFeedback',
   ],
 };
 

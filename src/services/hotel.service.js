@@ -1,5 +1,4 @@
 const httpStatus = require('http-status');
-const mongoose = require('mongoose');
 const { Hotel, Room } = require('../models');
 const ApiError = require('../utils/ApiError');
 

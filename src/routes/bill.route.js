@@ -43,13 +43,9 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  *       "403":
- *         $ref: '#/components/responses/Forbidden'
  *       "404":
- *         $ref: '#/components/responses/NotFound'
  *   post:
  *     summary: Create a Bill
  *     description:  Admins and Partner can create Bill
@@ -63,43 +59,45 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
- *               - name
- *               - email
- *               - password
- *               - role
+ *               - service
+ *               - total
+ *               - status
+ *               - guest
  *             properties:
- *               name:
+ *               service:
  *                 type: string
- *               email:
- *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
- *               role:
- *                  type: string
- *                  enum: [user, admin]
+ *               additionalFee:
+ *                 type: Number
+ *               checkIn:
+ *                 type: Date
+ *               checkOut:
+ *                 type: Date
+ *               status:
+ *                  type: boolean
+ *               room:
+ *                  type: roomId
+ *               table:
+ *                  type: tableId
+ *               detailVehicle:
+ *                  type: detailVehicleId
  *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
- *               role: user
+ *               service: hotel
+ *               additionalFee: 2000
+ *               total: 3
+ *               checkIn: 12/4/2021
+ *               checkOut: 15/4/2021
+ *               status: false
+ *               room: 23984723dukfh
+ *               guest: 239asdadsad84723dukfh
  *     responses:
  *       "201":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
  *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  *       "403":
- *         $ref: '#/components/responses/Forbidden'
  *
  *
  */
@@ -126,13 +124,9 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  *       "403":
- *         $ref: '#/components/responses/Forbidden'
  *       "404":
- *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
  *     summary: Update a Bill
@@ -154,36 +148,17 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
  *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
  *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  *       "403":
- *         $ref: '#/components/responses/Forbidden'
  *       "404":
- *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
  *     summary: Delete a Bill
@@ -202,10 +177,7 @@ module.exports = router;
  *       "200":
  *         description: No content
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  *       "403":
- *         $ref: '#/components/responses/Forbidden'
  *       "404":
- *         $ref: '#/components/responses/NotFound'
 
  */

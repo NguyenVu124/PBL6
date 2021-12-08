@@ -4,7 +4,8 @@ const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.route('/').get(hotelController.getHotels).post(auth('createHotel'), hotelController.createHotel);
+router.route('/:userId').post(auth('createHotel'), hotelController.createHotel);
+router.route('/').get(hotelController.getHotels);
 router
   .route('/:hotelId')
   .get(hotelController.getHotel)
@@ -32,7 +33,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /hotel:
+ * /hotel/{userId}:
  *   post:
  *     summary: Create a hotel
  *     description:  Admins and Partner can create hotel
@@ -72,7 +73,7 @@ module.exports = router;
  *               vote:
  *                  type: Number
  *               imageCover:
- *                  type: String
+ *                  type: string
  *               images:
  *                  type: Array(String)
  *               rooms:
@@ -80,20 +81,32 @@ module.exports = router;
  *               feedbacks:
  *                  type: Array(feedbackIds)
  *             example:
+ *                name: Novotel,
+ *                idUser: 61af6a598a479b6e18d60505,
+ *                city: Đà Nẵng,
+ *                address: 36 Bạch Đằng, Street, Hải Châu, Đà Nẵng,
+ *                phone: 0339878481,
+ *                totalRooms: 100,
+ *                availableRooms: 50,
+ *                imageCover: #,
+ *                images: []
  *     responses:
  *       "201":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
  *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  *
+ */
+
+/**
+ * @swagger
+ * /hotel:
  *   get:
  *     summary: Get all hotels
  *     description: retrieve all hotels.
@@ -389,7 +402,6 @@ module.exports = router;
  *         name: id
  *         required: true
  *         schema:
- *           type: string
  *         description: User id
  *     responses:
  *       "200":
@@ -418,39 +430,31 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
- *               - name
- *               - email
- *               - password
- *               - role
+ *               - idHotel
+ *               - price
+ *               - type
+ *               - images
+ *               - available
  *             properties:
- *               name:
+ *               idHotel:
+ *                 type: idHotel
+ *               price:
+ *                 type: Number
+ *               type:
  *                 type: string
- *               email:
- *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
- *               role:
- *                  type: string
- *                  enum: [user, admin]
+ *                  enum: [Single, Double, Family]
+ *               images:
+ *                  type: array-string
+ *               available:
+ *                  type: array-Date
  *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
- *               role: user
  *     responses:
  *       "201":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
  *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":

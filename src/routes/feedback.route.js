@@ -45,14 +45,10 @@ module.exports = router;
  *         description: OK
  *         content:
  *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/User'
+ *             schema
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  *       "403":
- *         $ref: '#/components/responses/Forbidden'
  *       "404":
- *         $ref: '#/components/responses/NotFound'
  *
  */
 
@@ -78,13 +74,9 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  *       "403":
- *         $ref: '#/components/responses/Forbidden'
  *       "404":
- *         $ref: '#/components/responses/NotFound'
  *
  *   post:
  *     summary: Create a feedback
@@ -99,43 +91,47 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
- *               - name
- *               - email
- *               - password
- *               - role
+ *               - service
+ *               - vote
+ *               - idUser
+ *               - idRestaurant
+ *               - idSelfVehicle
+ *               - idHotel
  *             properties:
- *               name:
+ *               service:
  *                 type: string
- *               email:
+ *               vote:
  *                 type: string
  *                 format: email
  *                 description: must be unique
- *               password:
+ *               comment:
  *                 type: string
  *                 format: password
  *                 minLength: 8
  *                 description: At least one number and one letter
- *               role:
- *                  type: string
- *                  enum: [user, admin]
+ *               idUser:
+ *                  type: idUser
+ *               idRestaurant:
+ *                  type: idRestaurant
+ *               idSelfVehicle:
+ *                  type: idSelfVehicle
+ *               idHotel:
+ *                  type: idHotel
  *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
- *               role: user
+ *               service: hotel
+ *               comment: ok
+ *               vote: 4
+ *               idUser: 61af6a598a479b6e18d60505
+ *               idHotel: 61af6cff4d52068d26112109
  *     responses:
  *       "201":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
  *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  *       "403":
- *         $ref: '#/components/responses/Forbidden'
  *
  */
 
@@ -161,7 +157,6 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -189,30 +184,14 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
  *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
  *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":

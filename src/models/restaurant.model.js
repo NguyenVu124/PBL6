@@ -23,10 +23,12 @@ const Restaurant = new mongoose.Schema({
   vote: {
     type: Number,
   },
-  tables: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Table',
-  },
+  tables: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Table',
+    },
+  ],
   images: [{ type: String }],
   imageCover: { type: String, required: true },
 });

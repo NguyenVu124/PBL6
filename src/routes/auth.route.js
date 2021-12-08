@@ -1,4 +1,5 @@
 const express = require('express');
+
 const validate = require('../middlewares/validate');
 const authValidation = require('../validations/auth.validation');
 const authController = require('../controllers/auth.controller');
@@ -10,8 +11,8 @@ router.post('/register', validate(authValidation.register), authController.regis
 router.post('/login', validate(authValidation.login), authController.login);
 router.post('/logout', validate(authValidation.logout), authController.logout);
 router.post('/refresh-tokens', validate(authValidation.refreshTokens), authController.refreshTokens);
+// router.post('/reset-password', validate(authValidation.resetPassword), authController.resetPassword);
 // router.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
-router.post('/reset-password', validate(authValidation.resetPassword), authController.resetPassword);
 // router.post('/send-verification-email', auth(), authController.sendVerificationEmail);
 // router.post('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail);
 
@@ -52,22 +53,41 @@ module.exports = router;
  *                 format: password
  *                 minLength: 8
  *                 description: At least one number and one letter
+ *               role:
+ *                 type: string
+ *                 description: one of two roles [guest, partner]
+ *               birth:
+ *                 type: Date
+ *                 description: include this field when register for guest
+ *               phone:
+ *                 type: string
+ *               typeBusiness:
+ *                 type: string
+ *                 description: one of three types [hotel, restaurant, self vehicle]; include this field when register for partner
+ *               businessIdentifier:
+ *                 type: string
+ *                 description: include this field when register for partner
+ *               isValid:
+ *                 type: Boolean
+ *                 description: include this field when register for partner
+ *               gender:
+ *                 type: string
+ *                 description: one of two [male or female]; include this field when register for guest
+ *               identityNumber:
+ *                 type: string
+ *                 description: include this field when register for guest
  *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
+ *                name: Hoàng Nguyên Vũ
+ *                email: hoangnguyenvubk@gmail.com
+ *                password: nguyenvu124
+ *                role: guest
+ *                birth: 12/04/2000
+ *                phone: 0339878481
+ *                gender: male
+ *                identityNumber: 191969481
  *     responses:
  *       "201":
  *         description: Created
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 user:
- *                   $ref: '#/components/schemas/User'
- *                 tokens:
- *                   $ref: '#/components/schemas/AuthTokens'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  */
@@ -95,8 +115,8 @@ module.exports = router;
  *                 type: string
  *                 format: password
  *             example:
- *               email: fake@example.com
- *               password: password1
+ *               email: hoangnguyenvubk@gmail.com
+ *               password: nguyenvu124
  *     responses:
  *       "200":
  *         description: OK
@@ -106,18 +126,13 @@ module.exports = router;
  *               type: object
  *               properties:
  *                 user:
- *                   $ref: '#/components/schemas/User'
  *                 tokens:
- *                   $ref: '#/components/schemas/AuthTokens'
  *       "401":
- *         description: Invalid email or password
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
  *             example:
  *               code: 401
- *               message: Invalid email or password
  */
 
 /**
@@ -143,7 +158,6 @@ module.exports = router;
  *       "204":
  *         description: No content
  *       "404":
- *         $ref: '#/components/responses/NotFound'
  */
 
 /**
@@ -171,9 +185,7 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/AuthTokens'
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  */
 
 // /**
