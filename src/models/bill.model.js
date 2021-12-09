@@ -2,8 +2,18 @@ const mongoose = require('mongoose');
 
 const Bill = new mongoose.Schema(
   {
-    service: {
-      type: String,
+    service: { type: String },
+    hotel: {
+      type: mongoose.Types.ObjectId,
+      ref: 'Hotel',
+    },
+    restaurant: {
+      type: mongoose.Types.ObjectId,
+      ref: 'Restaurant',
+    },
+    selfVehicle: {
+      type: mongoose.Types.ObjectId,
+      ref: 'SelfVehicle',
     },
     additionalFee: { type: Number },
     total: { type: Number },

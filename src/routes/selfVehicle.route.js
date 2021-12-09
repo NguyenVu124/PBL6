@@ -12,16 +12,6 @@ router
   .patch(auth('manageSelfVehicles'), selfVehicleController.updateSelfVehicle)
   .delete(auth('manageSelfVehicles'), selfVehicleController.deleteSelfVehicle);
 
-router.route('/:selfVehicleId/detailVehicle').get(selfVehicleController.getDetailVehicles);
-
-router.route('/detailVehicle').post(auth('manageDetailVehicles'), selfVehicleController.createDetailVehicle);
-
-router
-  .route('/detailVehicle/:detailVehicleId')
-  .get(selfVehicleController.getDetailVehicle)
-  .patch(auth('manageDetailVehicles'), selfVehicleController.updateDetailVehicle)
-  .delete(auth('manageDetailVehicles'), selfVehicleController.deleteDetailVehicle);
-
 module.exports = router;
 
 /**

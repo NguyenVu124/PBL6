@@ -15,10 +15,14 @@ const getHotelById = async (id) => {
   return Hotel.findById(id);
 };
 
-const updateHotelById = async (hotelId, updateBody) => {
+const updateHotelById = async (hotelId, updateBody, file) => {
   const hotel = await getHotelById(hotelId);
-  if (!hotel) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Hotel not found');
+  if (updateBody)
+    if (!hotel) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'Hotel not found');
+    }
+  if (file) {
+    hotel.images.push(`http://localhost:5000/${file.path}`);
   }
   Object.assign(hotel, updateBody);
   await hotel.save();

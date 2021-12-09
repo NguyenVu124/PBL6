@@ -23,7 +23,7 @@ const getHotel = catchAsync(async (req, res) => {
 });
 
 const updateHotel = catchAsync(async (req, res) => {
-  const hotel = await hotelService.updateHotelById(req.params.hotelId, req.body);
+  const hotel = await hotelService.updateHotelById(req.params.hotelId, req.body, req.file);
   res.send(hotel);
 });
 
@@ -35,7 +35,7 @@ const deleteHotel = catchAsync(async (req, res) => {
 
 const createRoom = catchAsync(async (req, res) => {
   const room = await hotelService.createRoom(req.body);
-  await hotelService.addRoomToHotel(room._id, req.body.hotel);
+  await hotelService.addRoomToHotel(room._id, req.body.idHotel);
   res.status(httpStatus.CREATED).send(room);
 });
 
