@@ -22,6 +22,7 @@ if (config.env !== 'test') {
 }
 
 app.use('/avt', express.static('avt'));
+app.use('/images', express.static('images'));
 // set security HTTP headers
 app.use(helmet());
 

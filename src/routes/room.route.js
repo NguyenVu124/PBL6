@@ -1,33 +1,124 @@
 const express = require('express');
-const { restaurantController } = require('../controllers');
+const multer = require('multer');
+const { hotelController } = require('../controllers');
 const auth = require('../middlewares/auth');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './images/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + file.originalname);
+  },
+});
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+});
 
 const router = express.Router();
 
-router.route('/:userId').post(auth('manageRestaurants'), restaurantController.createRestaurant);
-router.route('/').get(restaurantController.getRestaurants);
+router.route('/:hotelId').get(hotelController.getRooms);
+
+router.route('/').post(auth('manageRooms'), hotelController.createRoom);
+
 router
-  .route('/:restaurantId')
-  .get(restaurantController.getRestaurant)
-  .patch(auth('manageRestaurants'), restaurantController.updateRestaurant)
-  .delete(auth('manageRestaurants'), restaurantController.deleteRestaurant);
+  .route('/detail/:roomId')
+  .get(hotelController.getRoom)
+  .patch(auth('manageRooms'), upload.single('images'), hotelController.updateRoom)
+  .delete(auth('manageRooms'), hotelController.deleteRoom);
 
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: Restaurant
- *   description: Restaurant management and retrieval
+ *   name: Hotel
+ *   description: Hotel management and retrieval
  */
 
 /**
  * @swagger
- * /restaurant:
+ * /hotel/{userId}:
+ *   post:
+ *     summary: Create a hotel
+ *     description:  Admins and Partner can create hotel
+ *     tags: [Hotel]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - city
+ *               - email
+ *               - address
+ *               - phone
+ *               - totalRooms
+ *               - availableRooms
+ *               - imageCover
+ *             properties:
+ *               name:
+ *                 type: string
+ *               idUser:
+ *                 type: string
+ *               city:
+ *                 type: string
+ *               address:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *               totalRooms:
+ *                  type: Number
+ *               availableRooms:
+ *                  type: Number
+ *               vote:
+ *                  type: Number
+ *               imageCover:
+ *                  type: string
+ *               images:
+ *                  type: Array(String)
+ *               rooms:
+ *                  type: Array(roomIds)
+ *               feedbacks:
+ *                  type: Array(feedbackIds)
+ *             example:
+ *                name: Novotel,
+ *                idUser: 61af6a598a479b6e18d60505,
+ *                city: Đà Nẵng,
+ *                address: 36 Bạch Đằng, Street, Hải Châu, Đà Nẵng,
+ *                phone: 0339878481,
+ *                totalRooms: 100,
+ *                availableRooms: 50,
+ *                imageCover: #,
+ *                images: []
+ *     responses:
+ *       "201":
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *       "400":
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *
+ */
+
+/**
+ * @swagger
+ * /hotel:
  *   get:
- *     summary: Get all restaurants
- *     description: retrieve all restaurants.
- *     tags: [Restaurant]
+ *     summary: Get all hotels
+ *     description: retrieve all hotels.
+ *     tags: [Hotel]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -92,11 +183,11 @@ module.exports = router;
 
 /**
  * @swagger
- * /restaurant/{restaurantId}:
+ * /hotel/{hotelId}:
  *   get:
- *     summary: Get a restaurant
+ *     summary: Get a hotel
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Restaurant]
+ *     tags: [Hotel]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -121,9 +212,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a restaurant
+ *     summary: Update a hotel
  *     description: Logged in users can only update their own information. Only admins can update other users.
- *     tags: [Restaurant]
+ *     tags: [Hotel]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -140,22 +231,41 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 minLength: 8
+ *                 description: At least one number and one letter
  *             example:
+ *               name: fake name
+ *               email: fake@example.com
+ *               password: password1
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
+ *                $ref: '#/components/schemas/User'
  *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
  *       "403":
+ *         $ref: '#/components/responses/Forbidden'
  *       "404":
+ *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a restaurant
+ *     summary: Delete a hotel
  *     description: Logged in users can delete only themselves. Only admins can delete other users.
- *     tags: [Restaurant]
+ *     tags: [Hotel]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -169,17 +279,20 @@ module.exports = router;
  *       "200":
  *         description: No content
  *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
  *       "403":
+ *         $ref: '#/components/responses/Forbidden'
  *       "404":
+ *         $ref: '#/components/responses/NotFound'
  */
 
 /**
  * @swagger
- * /restaurant/{restaurantId}/table:
+ * /hotel/{hotelId}/room:
  *   get:
- *     summary: Get all tables of restaurant
+ *     summary: Get all room of hotel
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Restaurant]
+ *     tags: [Hotel]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -195,6 +308,7 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
+ *                $ref: '#/components/schemas/User'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -206,11 +320,11 @@ module.exports = router;
 
 /**
  * @swagger
- * /restaurant/table/{tableId}:
+ * /hotel/room/{roomId}:
  *   get:
- *     summary: Get a table
+ *     summary: Get a room
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Restaurant]
+ *     tags: [Hotel]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -226,14 +340,18 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
+ *                $ref: '#/components/schemas/User'
  *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
  *       "403":
+ *         $ref: '#/components/responses/Forbidden'
  *       "404":
+ *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a table
+ *     summary: Update a room
  *     description: Logged in users can only update their own information. Only admins can update other users.
- *     tags: [Restaurant]
+ *     tags: [Hotel]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -250,22 +368,41 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 minLength: 8
+ *                 description: At least one number and one letter
  *             example:
+ *               name: fake name
+ *               email: fake@example.com
+ *               password: password1
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
+ *                $ref: '#/components/schemas/User'
  *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
  *       "403":
+ *         $ref: '#/components/responses/Forbidden'
  *       "404":
+ *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a table
+ *     summary: Delete a room
  *     description: Logged in users can delete only themselves. Only admins can delete other users.
- *     tags: [Restaurant]
+ *     tags: [Hotel]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -273,80 +410,25 @@ module.exports = router;
  *         name: id
  *         required: true
  *         schema:
- *           type: string
  *         description: User id
  *     responses:
  *       "200":
  *         description: No content
  *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
  *       "403":
+ *         $ref: '#/components/responses/Forbidden'
  *       "404":
+ *         $ref: '#/components/responses/NotFound'
  */
 
 /**
  * @swagger
- * /restaurant/table:
+ * /hotel/room:
  *   post:
- *     summary: Create a table
- *     description:  Admins and Partner can create table
- *     tags: [Restaurant]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *             properties:
- *             example:
- *     responses:
- *       "201":
- *         description: Created
- *         content:
- *           application/json:
- *             schema:
- *       "400":
- *       "401":
- *       "403":
- *
- */
-
-/**
- * @swagger
- * /restaurant:
- *   get:
- *     summary: Get all restaurants
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Restaurant]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: User id
- *     responses:
- *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *       "401":
- *       "403":
- *       "404":
- */
-
-/**
- * @swagger
- * /restaurant/{userId}:
- *   post:
- *     summary: Create a restaurant
+ *     summary: Create a room
  *     description:  Admins and Partner can create hotel
- *     tags: [Restaurant]
+ *     tags: [Hotel]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -356,7 +438,23 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
+ *               - idHotel
+ *               - price
+ *               - type
+ *               - images
+ *               - available
  *             properties:
+ *               idHotel:
+ *                 type: idHotel
+ *               price:
+ *                 type: Number
+ *               type:
+ *                 type: string
+ *                  enum: [Single, Double, Family]
+ *               images:
+ *                  type: array-string
+ *               available:
+ *                  type: array-Date
  *             example:
  *     responses:
  *       "201":
@@ -366,6 +464,8 @@ module.exports = router;
  *             schema:
  *       "400":
  *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
  *       "403":
+ *         $ref: '#/components/responses/Forbidden'
  *
  */

@@ -4,13 +4,15 @@ const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.route('/:userId').post(auth('manageRestaurants'), restaurantController.createRestaurant);
-router.route('/').get(restaurantController.getRestaurants);
+router.route('/:restaurantId/table').get(restaurantController.getTables);
+
+router.route('/table').post(auth('manageTables'), restaurantController.createTable);
+
 router
-  .route('/:restaurantId')
-  .get(restaurantController.getRestaurant)
-  .patch(auth('manageRestaurants'), restaurantController.updateRestaurant)
-  .delete(auth('manageRestaurants'), restaurantController.deleteRestaurant);
+  .route('/table/:tableId')
+  .get(restaurantController.getTable)
+  .patch(auth('manageTables'), restaurantController.updateTable)
+  .delete(auth('manageTables'), restaurantController.deleteTable);
 
 module.exports = router;
 

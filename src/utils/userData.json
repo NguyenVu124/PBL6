@@ -62,5 +62,32 @@
     "phone": "0339878482",
     "typeBusiness": "restaurant",
     "businessIdentifier": "CMD1234125"
+  },
+  {
+    "name": "Xe tu lai Da Nang",
+    "email": "xetulaidn@gmail.com",
+    "password": "xetulaidn123",
+    "role": "partner",
+    "phone": "0339878481",
+    "typeBusiness": "self vehicle",
+    "businessIdentifier": "CMD12341255"
+  },
+  {
+    "name": "Xe tu lai song Han",
+    "email": "xetulaish@gmail.com",
+    "password": "xetulaish123",
+    "role": "partner",
+    "phone": "0339878489",
+    "typeBusiness": "self vehicle",
+    "businessIdentifier": "CMD12341255"
+  },
+  {
+    "name": "Xe tu lai Son Tra",
+    "email": "xetulaist@gmail.com",
+    "password": "xetulaist123",
+    "role": "partner",
+    "phone": "0339878484",
+    "typeBusiness": "self vehicle",
+    "businessIdentifier": "CMD123412553"
   }
 ]

@@ -1,33 +1,35 @@
 const express = require('express');
-const { restaurantController } = require('../controllers');
+const { selfVehicleController } = require('../controllers');
 const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.route('/:userId').post(auth('manageRestaurants'), restaurantController.createRestaurant);
-router.route('/').get(restaurantController.getRestaurants);
+router.route('/:selfVehicleId/detailVehicle').get(selfVehicleController.getDetailVehicles);
+
+router.route('/detailVehicle').post(auth('manageDetailVehicles'), selfVehicleController.createDetailVehicle);
+
 router
-  .route('/:restaurantId')
-  .get(restaurantController.getRestaurant)
-  .patch(auth('manageRestaurants'), restaurantController.updateRestaurant)
-  .delete(auth('manageRestaurants'), restaurantController.deleteRestaurant);
+  .route('/detailVehicle/:detailVehicleId')
+  .get(selfVehicleController.getDetailVehicle)
+  .patch(auth('manageDetailVehicles'), selfVehicleController.updateDetailVehicle)
+  .delete(auth('manageDetailVehicles'), selfVehicleController.deleteDetailVehicle);
 
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: Restaurant
- *   description: Restaurant management and retrieval
+ *   name: SelfVehicle
+ *   description: SelfVehicle management and retrieval
  */
 
 /**
  * @swagger
- * /restaurant:
+ * /selfVehicle:
  *   get:
- *     summary: Get all restaurants
- *     description: retrieve all restaurants.
- *     tags: [Restaurant]
+ *     summary: Get all SelfVehicles
+ *     description: retrieve all SelfVehicles.
+ *     tags: [SelfVehicle]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -85,18 +87,16 @@ module.exports = router;
  *                   type: integer
  *                   example: 1
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  *       "403":
- *         $ref: '#/components/responses/Forbidden'
  */
 
 /**
  * @swagger
- * /restaurant/{restaurantId}:
+ * /selfVehicle/{selfVehicleId}:
  *   get:
- *     summary: Get a restaurant
+ *     summary: Get a SelfVehicle
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Restaurant]
+ *     tags: [SelfVehicle]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -112,18 +112,14 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  *       "403":
- *         $ref: '#/components/responses/Forbidden'
  *       "404":
- *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a restaurant
+ *     summary: Update a SelfVehicle
  *     description: Logged in users can only update their own information. Only admins can update other users.
- *     tags: [Restaurant]
+ *     tags: [SelfVehicle]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -153,9 +149,9 @@ module.exports = router;
  *       "404":
  *
  *   delete:
- *     summary: Delete a restaurant
+ *     summary: Delete a SelfVehicle
  *     description: Logged in users can delete only themselves. Only admins can delete other users.
- *     tags: [Restaurant]
+ *     tags: [SelfVehicle]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -175,11 +171,11 @@ module.exports = router;
 
 /**
  * @swagger
- * /restaurant/{restaurantId}/table:
+ * /selfVehicle/{selfVehicleId}/detailVehicle:
  *   get:
- *     summary: Get all tables of restaurant
+ *     summary: Get all tables of SelfVehicle
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Restaurant]
+ *     tags: [SelfVehicle]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -196,21 +192,18 @@ module.exports = router;
  *           application/json:
  *             schema:
  *       "401":
- *         $ref: '#/components/responses/Unauthorized'
  *       "403":
- *         $ref: '#/components/responses/Forbidden'
  *       "404":
- *         $ref: '#/components/responses/NotFound'
  *
  */
 
 /**
  * @swagger
- * /restaurant/table/{tableId}:
+ * /selfVehicle/detailVehicle/{detailVehicleId}:
  *   get:
- *     summary: Get a table
+ *     summary: Get a detailVehicle
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Restaurant]
+ *     tags: [SelfVehicle]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -231,9 +224,9 @@ module.exports = router;
  *       "404":
  *
  *   patch:
- *     summary: Update a table
+ *     summary: Update a detailVehicle
  *     description: Logged in users can only update their own information. Only admins can update other users.
- *     tags: [Restaurant]
+ *     tags: [SelfVehicle]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -263,9 +256,9 @@ module.exports = router;
  *       "404":
  *
  *   delete:
- *     summary: Delete a table
+ *     summary: Delete a detailVehicle
  *     description: Logged in users can delete only themselves. Only admins can delete other users.
- *     tags: [Restaurant]
+ *     tags: [SelfVehicle]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -285,11 +278,11 @@ module.exports = router;
 
 /**
  * @swagger
- * /restaurant/table:
+ * /SelfVehicle/detailVehicle:
  *   post:
- *     summary: Create a table
- *     description:  Admins and Partner can create table
- *     tags: [Restaurant]
+ *     summary: Create a detailVehicle
+ *     description:  Admins and Partner can create detailVehicle
+ *     tags: [SelfVehicle]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -315,11 +308,11 @@ module.exports = router;
 
 /**
  * @swagger
- * /restaurant:
+ * /SelfVehicle:
  *   get:
- *     summary: Get all restaurants
+ *     summary: Get all SelfVehicles
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Restaurant]
+ *     tags: [SelfVehicle]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -342,11 +335,11 @@ module.exports = router;
 
 /**
  * @swagger
- * /restaurant/{userId}:
+ * /selfVehicle/{userId}:
  *   post:
- *     summary: Create a restaurant
- *     description:  Admins and Partner can create hotel
- *     tags: [Restaurant]
+ *     summary: Create a SelfVehicle
+ *     description:  Admins and Partner can create SelfVehicle
+ *     tags: [SelfVehicle]
  *     security:
  *       - bearerAuth: []
  *     requestBody:

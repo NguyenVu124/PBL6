@@ -12,7 +12,16 @@ const getBills = async () => {
 };
 
 const getBillById = async (id) => {
-  return Bill.findById(id);
+  const service = await Bill.findById(id).select('service -_id');
+  let result = null;
+  if (service.service === 'hotel') {
+    result = await Bill.findById(id).populate('hotel').populate('room').exec();
+  } else if (service.service === 'restaurant') {
+    result = await Bill.findById(id).populate('restaurant').populate('table').exec();
+  } else if (service.service === 'selfVehicle') {
+    result = await Bill.findById(id).populate('selfVehicle').populate('detailVehicle').exec();
+  }
+  return result;
 };
 
 const updateBillById = async (BillId, updateBody) => {

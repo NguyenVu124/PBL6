@@ -1,6 +1,22 @@
 const express = require('express');
+const multer = require('multer');
 const { hotelController } = require('../controllers');
 const auth = require('../middlewares/auth');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './images/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + file.originalname);
+  },
+});
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+});
 
 const router = express.Router();
 
@@ -9,18 +25,8 @@ router.route('/').get(hotelController.getHotels);
 router
   .route('/:hotelId')
   .get(hotelController.getHotel)
-  .patch(auth('manageHotels'), hotelController.updateHotel)
+  .patch(auth('manageHotels'), upload.single('images'), hotelController.updateHotel)
   .delete(auth('manageHotels'), hotelController.deleteHotel);
-
-router.route('/:hotelId/room').get(hotelController.getRooms);
-
-router.route('/room').post(auth('manageRooms'), hotelController.createRoom);
-
-router
-  .route('/room/:roomId')
-  .get(hotelController.getRoom)
-  .patch(auth('manageRooms'), hotelController.updateRoom)
-  .delete(auth('manageRooms'), hotelController.deleteRoom);
 
 module.exports = router;
 
