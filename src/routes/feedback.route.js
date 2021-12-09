@@ -8,13 +8,13 @@ router.route('/:userId').get(feedbackController.getFeedbacksByUserId);
 router
   .route('/:service/:serviceId')
   .get(feedbackController.getFeedbacksByServiceId)
-  .post(auth('createFeedback'), feedbackController.createFeedback);
+  .post(auth('manageFeedbacks'), feedbackController.createFeedback);
 
 router
   .route('/:feedbackId')
   .get(feedbackController.getFeedback)
-  .patch(auth('updateFeedback'), feedbackController.updateFeedback)
-  .delete(auth('deleteFeedback'), feedbackController.deleteFeedback);
+  .patch(auth('manageFeedbacks'), feedbackController.updateFeedback)
+  .delete(auth('manageFeedbacks'), feedbackController.deleteFeedback);
 module.exports = router;
 
 /**
