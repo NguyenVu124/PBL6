@@ -4,23 +4,23 @@ const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.route('/:userId').post(auth('createSelfVehicle'), selfVehicleController.createSelfVehicle);
+router.route('/:userId').post(auth('manageSelfVehicles'), selfVehicleController.createSelfVehicle);
 router.route('/').get(selfVehicleController.getSelfVehicles);
 router
   .route('/:selfVehicleId')
   .get(selfVehicleController.getSelfVehicle)
-  .patch(auth('updateSelfVehicle'), selfVehicleController.updateSelfVehicle)
-  .delete(auth('deleteSelfVehicle'), selfVehicleController.deleteSelfVehicle);
+  .patch(auth('manageSelfVehicles'), selfVehicleController.updateSelfVehicle)
+  .delete(auth('manageSelfVehicles'), selfVehicleController.deleteSelfVehicle);
 
 router.route('/:selfVehicleId/detailVehicle').get(selfVehicleController.getDetailVehicles);
 
-router.route('/detailVehicle').post(auth('createDetailVehicle'), selfVehicleController.createDetailVehicle);
+router.route('/detailVehicle').post(auth('manageDetailVehicles'), selfVehicleController.createDetailVehicle);
 
 router
   .route('/detailVehicle/:detailVehicleId')
   .get(selfVehicleController.getDetailVehicle)
-  .patch(auth('updateDetailVehicle'), selfVehicleController.updateDetailVehicle)
-  .delete(auth('deleteDetailVehicle'), selfVehicleController.deleteDetailVehicle);
+  .patch(auth('manageDetailVehicles'), selfVehicleController.updateDetailVehicle)
+  .delete(auth('manageDetailVehicles'), selfVehicleController.deleteDetailVehicle);
 
 module.exports = router;
 
