@@ -20,7 +20,7 @@ const feedbackSchema = new mongoose.Schema(
       ref: 'Restaurant',
     },
     idSelfVehicle: { type: mongoose.Types.ObjectId, ref: 'SelfVehicle' },
-    IdHotel: { type: mongoose.Types.ObjectId, ref: 'Hotel' },
+    idHotel: { type: mongoose.Types.ObjectId, ref: 'Hotel' },
   },
   {
     timestamps: true,

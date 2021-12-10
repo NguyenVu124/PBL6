@@ -17,13 +17,13 @@ const getFeedbacksByServiceId = async (service, serviceId) => {
   let query = {};
   switch (service) {
     case 'restaurant':
-      query = { restaurant: serviceId };
+      query = { idRestaurant: serviceId };
       break;
     case 'hotel':
-      query = { hotel: serviceId };
+      query = { idHotel: serviceId };
       break;
     case 'selfVehicle':
-      query = { selfVehicle: serviceId };
+      query = { idSelfVehicle: serviceId };
       break;
     default:
       break;
