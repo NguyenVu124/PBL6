@@ -66,7 +66,15 @@ module.exports = router;
  *             properties:
  *               service:
  *                 type: string
+ *               hotel:
+ *                 type: idHotel
+ *               restaurant:
+ *                 type: idRestaurant
+ *               selfVehicle:
+ *                 type: idSelfVehicle
  *               additionalFee:
+ *                 type: Number
+ *               total:
  *                 type: Number
  *               checkIn:
  *                 type: Date
@@ -74,6 +82,8 @@ module.exports = router;
  *                 type: Date
  *               status:
  *                  type: boolean
+ *               guest:
+ *                  type: idUser
  *               room:
  *                  type: roomId
  *               table:
@@ -82,6 +92,7 @@ module.exports = router;
  *                  type: detailVehicleId
  *             example:
  *               service: hotel
+ *               hotel: 23423432432j423432
  *               additionalFee: 2000
  *               total: 3
  *               checkIn: 12/4/2021

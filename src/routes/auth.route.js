@@ -89,7 +89,6 @@ module.exports = router;
  *       "201":
  *         description: Created
  *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
  */
 
 /**

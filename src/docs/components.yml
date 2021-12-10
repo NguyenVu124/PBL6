@@ -137,4 +137,22 @@ components:
         
       example:
 
+    Room:
+      type: object
+      properties:
+        
+      example:
+
+    Table:
+      type: object
+      properties:
+        
+      example:
+
+    DetailVehicle:
+      type: object
+      properties:
+        
+      example:
+
 
