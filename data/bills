@@ -1,0 +1,31 @@
+[{
+  "_id": {
+    "$oid": "61b375f64096d32588c2eaaf"
+  },
+  "service": "hotel",
+  "hotel": {
+    "$oid": "61b1b0066fa93b6c720ee24f"
+  },
+  "additionalFee": 20000,
+  "total": 3000000,
+  "checkIn": {
+    "$date": "2021-11-19T17:00:00Z"
+  },
+  "checkOut": {
+    "$date": "2021-11-21T17:00:00Z"
+  },
+  "status": false,
+  "guest": {
+    "$oid": "61b1ab9b9e6fe23e1265a790"
+  },
+  "room": {
+    "$oid": "61b2207fe030945c3923a2bc"
+  },
+  "createdAt": {
+    "$date": "2021-12-10T15:44:54.329Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-10T15:44:54.329Z"
+  },
+  "__v": 0
+}]
