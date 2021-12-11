@@ -25,7 +25,7 @@ module.exports = router;
  * @swagger
  * /bill/{userId}:
  *   get:
- *     summary: Get a Bill
+ *     summary: Get all Bills by userId
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
  *     tags: [Bill]
  *     security:

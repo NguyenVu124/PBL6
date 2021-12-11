@@ -6,6 +6,7 @@ const { feedbackService } = require('../services');
 const createFeedback = catchAsync(async (req, res) => {
   const feedback = await feedbackService.createFeedback(req.body);
   await feedbackService.addFeedbackToService(feedback._id, req.body);
+  // await feedbackService.addFeedbackToUser(feedback._id, req.body);
   res.status(httpStatus.CREATED).send(feedback);
 });
 

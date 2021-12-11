@@ -10,7 +10,7 @@ const createHotel = catchAsync(async (req, res) => {
 });
 
 const getHotels = catchAsync(async (req, res) => {
-  const result = await hotelService.getHotels();
+  const result = await hotelService.getHotels(req.query);
   res.send(result);
 });
 
