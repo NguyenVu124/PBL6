@@ -23,6 +23,14 @@ const hotelSchema = mongoose.Schema(
         ref: 'Room',
       },
     ],
+    priceFrom: {
+      type: Number,
+      required: true,
+    },
+    priceTo: {
+      type: Number,
+      required: true,
+    },
     feedbacks: [
       {
         type: mongoose.Schema.Types.ObjectId,
