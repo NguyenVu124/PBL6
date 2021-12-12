@@ -67,7 +67,7 @@ const createRoom = async (roomBody) => {
 };
 
 const getRooms = async () => {
-  const rooms = await Hotel.find();
+  const rooms = await Room.find();
   return rooms;
 };
 
