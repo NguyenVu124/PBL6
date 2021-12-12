@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const types = ['Xe máy', 'Ô tô 7 chỗ', 'Ô tô 4 chỗ', 'Xe đạp'];
+const types = ['Xe máy', 'Ô tô ', 'Xe đạp'];
 
 const SelfVehicle = new mongoose.Schema({
   name: {

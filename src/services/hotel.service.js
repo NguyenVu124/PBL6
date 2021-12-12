@@ -44,7 +44,7 @@ const deleteHotelById = async (hotelId) => {
   return hotel;
 };
 
-const getRooms = async (hotelId) => {
+const getRoomsByHotel = async (hotelId) => {
   const roomsId = await Hotel.findById(hotelId).select('rooms');
   const rooms = await Room.find({ _id: roomsId.rooms });
   return rooms;
@@ -64,6 +64,11 @@ const addRoomToHotel = async (roomId, hotelId) => {
 
 const createRoom = async (roomBody) => {
   return Room.create(roomBody);
+};
+
+const getRooms = async () => {
+  const rooms = await Hotel.find();
+  return rooms;
 };
 
 const getRoomById = async (id) => {
@@ -97,8 +102,9 @@ module.exports = {
   deleteAllRoomsOfHotel,
   deleteHotelById,
   addRoomToHotel,
-  getRooms,
+  getRoomsByHotel,
   createRoom,
+  getRooms,
   getRoomById,
   updateRoomById,
   deleteRoomById,

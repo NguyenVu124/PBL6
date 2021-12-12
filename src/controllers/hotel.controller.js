@@ -38,9 +38,13 @@ const createRoom = catchAsync(async (req, res) => {
   await hotelService.addRoomToHotel(room._id, req.body.idHotel);
   res.status(httpStatus.CREATED).send(room);
 });
-
 const getRooms = catchAsync(async (req, res) => {
-  const result = await hotelService.getRooms(req.params.hotelId);
+  const result = await hotelService.getRooms();
+  res.send(result);
+});
+
+const getRoomsByHotel = catchAsync(async (req, res) => {
+  const result = await hotelService.getRoomsByHotel(req.params.hotelId);
   res.send(result);
 });
 
@@ -68,8 +72,9 @@ module.exports = {
   getHotel,
   updateHotel,
   deleteHotel,
-  getRooms,
+  getRoomsByHotel,
   createRoom,
+  getRooms,
   getRoom,
   updateRoom,
   deleteRoom,

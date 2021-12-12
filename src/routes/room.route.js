@@ -20,9 +20,9 @@ const upload = multer({
 
 const router = express.Router();
 
-router.route('/:hotelId/all').get(hotelController.getRooms);
+router.route('/:hotelId/all').get(hotelController.getRoomsByHotel);
 
-router.route('/').post(auth('manageRooms'), hotelController.createRoom);
+router.route('/').get(hotelController.getRooms).post(auth('manageRooms'), hotelController.createRoom);
 
 router
   .route('/:roomId')
@@ -216,5 +216,30 @@ module.exports = router;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
+ *   get:
+ *     summary: Get all rooms
+ *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
+ *     tags: [Room]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User id
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
  *
  */
