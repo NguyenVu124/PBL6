@@ -4,13 +4,13 @@ const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
+router.route('/:userId').get(auth('getBills'), billController.getBills).post(auth('manageBills'), billController.createBill);
+
 router
   .route('/:userId/:billId')
   .get(auth('getBills'), billController.getBill)
   .patch(auth('manageBills'), billController.updateBill)
   .delete(auth('manageBills'), billController.deleteBill);
-
-router.route('/:userId').get(auth('getBills'), billController.getBills).post(auth('manageBills'), billController.createBill);
 
 module.exports = router;
 

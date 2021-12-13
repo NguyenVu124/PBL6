@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const { toJSON } = require('./plugins');
 
-const Bill = new mongoose.Schema(
+const billSchema = new mongoose.Schema(
   {
     service: { type: String },
     hotel: {
@@ -32,4 +33,7 @@ const Bill = new mongoose.Schema(
     timestamps: true,
   }
 );
-module.exports = mongoose.model('Bill', Bill);
+billSchema.plugin(toJSON);
+const Bill = mongoose.model('Bill', billSchema);
+
+module.exports = Bill;
