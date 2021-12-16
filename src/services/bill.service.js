@@ -6,8 +6,8 @@ const createBill = async (billBody) => {
   return Bill.create(billBody);
 };
 
-const getBills = async () => {
-  const bills = await Bill.find();
+const getBills = async (query) => {
+  const bills = await Bill.find(query);
   return bills;
 };
 

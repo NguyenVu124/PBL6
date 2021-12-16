@@ -7,6 +7,7 @@ const createHotel = async (hotelBody) => {
 };
 
 const getHotels = async (query) => {
+  console.log(Object.keys(query)[0]);
   const hotels = await Hotel.find(query);
   return hotels;
 };

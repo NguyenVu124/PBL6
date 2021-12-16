@@ -9,7 +9,7 @@ const createBill = catchAsync(async (req, res) => {
 });
 
 const getBills = catchAsync(async (req, res) => {
-  const result = await billService.getBills();
+  const result = await billService.getBills(req.query);
   res.send(result);
 });
 
