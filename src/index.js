@@ -10,6 +10,10 @@ mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
     logger.info(`Listening to port ${config.port}`);
     logger.info(`Access to server: http://localhost:${config.port}`);
   });
+  // server = app.listen(process.env.APPID, () => {
+  //   logger.info(`Listening to port ${process.env.APPID}`);
+  //   logger.info(`Access to server: http://localhost:${process.env.APPID}`);
+  // });
 });
 
 const exitHandler = () => {

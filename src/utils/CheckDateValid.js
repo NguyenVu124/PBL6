@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 const getDates = (startDate, endDate) => {
   const dates = [];
   let currentDate = startDate;

@@ -1,32 +1,60 @@
+# version: '3'
+
+# services:
+#   node-app:
+#     build: .
+#     image: node-app
+#     environment:
+#       - MONGODB_URL=mongodb://mongodb:27017/node-boilerplate
+#     ports:
+#       - '3000:3000'
+#     depends_on:
+#       - mongodb
+#     volumes:
+#       - .:/usr/src/node-app
+#     networks:
+#       - node-network
+
+#   mongodb:
+#     image: mongo:4.2.1-bionic
+#     ports:
+#       - '27017:27017'
+#     volumes:
+#       - dbdata:/data/db
+#     networks:
+#       - node-network
+
+# volumes:
+#   dbdata:
+
+# networks:
+#   node-network:
+#     driver: bridge
 version: '3'
-
 services:
-  node-app:
-    build: .
-    image: node-app
-    environment:
-      - MONGODB_URL=mongodb://mongodb:27017/node-boilerplate
-    ports:
-      - '3000:3000'
-    depends_on:
-      - mongodb
+  nginx_load_balancer:
+    image: nginx
     volumes:
-      - .:/usr/src/node-app
-    networks:
-      - node-network
-
-  mongodb:
-    image: mongo:4.2.1-bionic
+      - './nginx/default.conf:/etc/nginx/nginx.conf'
     ports:
-      - '27017:27017'
-    volumes:
-      - dbdata:/data/db
-    networks:
-      - node-network
-
-volumes:
-  dbdata:
-
-networks:
-  node-network:
-    driver: bridge
+      - '8080:80'
+  app1:
+    image: pbl6
+    environment: 
+      - APPID=1111
+  app2:
+    image: pbl6
+    environment: 
+      - APPID=2222
+  app3:
+    image: pbl6
+    environment: 
+      - APPID=3333
+  app4:
+    image: pbl6
+    environment: 
+      - APPID=4444
+  app5:
+    image: pbl6
+    environment: 
+      - APPID=5555
