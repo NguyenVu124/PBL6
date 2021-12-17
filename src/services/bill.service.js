@@ -1,8 +1,16 @@
+/* eslint-disable no-param-reassign */
 const httpStatus = require('http-status');
-const { Bill } = require('../models');
+const { Bill, Room } = require('../models');
 const ApiError = require('../utils/ApiError');
+const CheckDateValid = require('../utils/CheckDateValid');
 
 const createBill = async (billBody) => {
+  const checkIn = billBody.checkIn.substring(0, 10).split('-');
+  const checkOut = billBody.checkOut.substring(0, 10).split('-');
+  const availables = await Room.findById(billBody.room).populate('available-_id');
+  if (CheckDateValid(checkIn, checkOut, availables)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Dates has been taken');
+  }
   return Bill.create(billBody);
 };
 

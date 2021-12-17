@@ -4,8 +4,10 @@ const catchAsync = require('../utils/catchAsync');
 const { billService } = require('../services');
 
 const createBill = catchAsync(async (req, res) => {
-  const bill = await billService.createBill(req.body);
-  res.status(httpStatus.CREATED).send(bill);
+  // const bill = await billService.createBill(req.body);
+  await billService.createBill(req.body);
+  res.send('test');
+  // res.status(httpStatus.CREATED).send(bill);
 });
 
 const getBills = catchAsync(async (req, res) => {
