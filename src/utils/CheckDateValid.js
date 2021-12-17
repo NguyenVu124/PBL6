@@ -18,13 +18,14 @@ const checkDatesValid = (checkIn, checkOut, availables) => {
     new Date(Number(checkIn[0]), Number(checkIn[1]), Number(checkIn[2])),
     new Date(Number(checkOut[0]), Number(checkOut[1]), Number(checkOut[2]))
   );
-  dates.forEach((date) => {
-    availables.forEach((available) => {
-      if (date.toISOString.substring(0, 10) === available.toISOString.substring(0, 10)) {
+  for (let i = 0; i < dates.length; i++) {
+    for (let j = 0; j < availables.length; j++) {
+      if (dates[i].toISOString().substring(0, 10) === availables[j].toISOString().substring(0, 10)) {
+        // console.log(dates[i].toISOString().substring(0, 10), availables[j].toISOString().substring(0, 10));
         return true;
       }
-    });
-  });
+    }
+  }
   return false;
 };
 
