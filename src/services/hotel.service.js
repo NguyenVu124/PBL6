@@ -7,8 +7,34 @@ const createHotel = async (hotelBody) => {
 };
 
 const getHotels = async (query) => {
-  console.log(Object.keys(query)[0]);
-  const hotels = await Hotel.find(query);
+  let hotels = null;
+  if (Object.keys(query)[0] === 'sort') {
+    const type = Object.values(query)[0];
+    switch (type) {
+      case 'price-desc': {
+        hotels = await Hotel.find().sort({ priceTo: 'desc' }).exec();
+        break;
+      }
+      case 'price-asc': {
+        hotels = await Hotel.find().sort({ priceTo: 'asc' }).exec();
+        break;
+      }
+      case 'vote': {
+        hotels = await Hotel.find().sort({ vote: 'desc' }).exec();
+        break;
+      }
+      default: {
+        hotels = await Hotel.find();
+      }
+    }
+  } else if (Object.keys(query)[0] === 'priceFrom' && Object.keys(query)[1] === 'priceTo') {
+    const priceFrom = Number(Object.values(query)[0]);
+    const priceTo = Number(Object.values(query)[1]);
+    const result = await Hotel.find();
+    hotels = result.filter((hotel) => hotel.priceFrom <= priceFrom && hotel.priceTo <= priceTo);
+  } else {
+    hotels = await Hotel.find(query);
+  }
   return hotels;
 };
 
