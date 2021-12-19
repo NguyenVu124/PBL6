@@ -36,7 +36,7 @@ const deleteSelfVehicle = catchAsync(async (req, res) => {
 
 const createDetailVehicle = catchAsync(async (req, res) => {
   const detailVehicle = await selfVehicleService.createDetailVehicle(req.body);
-  await selfVehicleService.addDetailVehicleToSelfVehicle(detailVehicle._id, req.body.selfVehicle);
+  await selfVehicleService.addDetailVehicleToSelfVehicle(detailVehicle._id, req.body.idSelfVehicle);
   res.status(httpStatus.CREATED).send(detailVehicle);
 });
 

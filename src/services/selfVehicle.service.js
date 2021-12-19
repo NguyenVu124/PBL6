@@ -56,9 +56,9 @@ const addDetailVehicleToSelfVehicle = async (detailVehicleId, selfVehicleId) => 
   if (!selfVehicle) {
     throw new ApiError(httpStatus.NOT_FOUND, 'SelfVehicle not found');
   }
-  const { detailVehicles } = selfVehicle;
-  detailVehicles.push(detailVehicleId);
-  const updateBody = { detailVehicles };
+  const { vehicles } = selfVehicle;
+  vehicles.push(detailVehicleId);
+  const updateBody = { vehicles };
   Object.assign(selfVehicle, updateBody);
   await selfVehicle.save();
 };
