@@ -12,7 +12,7 @@ const getSelfVehicles = async (query) => {
 };
 
 const getDetailVehicles = async () => {
-  const detailVehicles = await DetailVehicle.find();
+  const detailVehicles = await DetailVehicle.find().populate('idSelfVehicle').exec();
   return detailVehicles;
 };
 

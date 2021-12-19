@@ -94,7 +94,7 @@ const createRoom = async (roomBody) => {
 };
 
 const getRooms = async () => {
-  const rooms = await Room.find();
+  const rooms = await Room.find().populate('idHotel').exec();
   return rooms;
 };
 
