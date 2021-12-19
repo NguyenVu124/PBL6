@@ -11,7 +11,7 @@ const Restaurant = new mongoose.Schema({
   type: { type: String },
   totalTables: { type: Number, required: true },
   availableTables: { type: Number, required: true },
-  feedBacks: [
+  feedbacks: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'FeedBack',

@@ -39,7 +39,7 @@ const createRoom = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(room);
 });
 const getRooms = catchAsync(async (req, res) => {
-  const result = await hotelService.getRooms();
+  const result = await hotelService.getRooms(req.query);
   res.send(result);
 });
 

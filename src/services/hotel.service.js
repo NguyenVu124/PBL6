@@ -93,7 +93,7 @@ const createRoom = async (roomBody) => {
   return Room.create(roomBody);
 };
 
-const getRooms = async () => {
+const getRooms = async (query) => {
   const rooms = await Room.find().populate('idHotel').exec();
   return rooms;
 };
