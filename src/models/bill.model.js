@@ -26,7 +26,7 @@ const billSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: 'Room',
     },
-    table: { type: mongoose.Types.ObjectId, ref: 'Table' },
+    chairs: { type: Number, default: 2 },
     detailVehicle: { type: mongoose.Types.ObjectId, ref: 'DetailVehicle' },
   },
   {
