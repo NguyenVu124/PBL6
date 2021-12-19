@@ -14,6 +14,7 @@ const SelfVehicle = new mongoose.Schema({
       ref: 'FeedBack',
     },
   ],
+  city: { type: String, trim: true },
   address: { type: String, required: true },
   vote: { type: Number },
   vehicles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'DetailVehicle' }],
