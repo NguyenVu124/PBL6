@@ -99,9 +99,7 @@ const getRooms = async () => {
 };
 
 const getRoomById = async (id) => {
-  return Room.findById(id)
-    .populate({ path: 'idHotel', select: ['city', 'name', 'phone'] })
-    .exec();
+  return Room.findById(id).populate('idHotel').exec();
 };
 
 const updateRoomById = async (roomId, updateBody) => {
