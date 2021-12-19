@@ -41,7 +41,12 @@ const createDetailVehicle = catchAsync(async (req, res) => {
 });
 
 const getDetailVehicles = catchAsync(async (req, res) => {
-  const result = await selfVehicleService.getDetailVehicles(req.params.selfVehicleId);
+  const result = await selfVehicleService.getDetailVehicles();
+  res.send(result);
+});
+
+const getDetailVehiclesBySelfVehicle = catchAsync(async (req, res) => {
+  const result = await selfVehicleService.getDetailVehiclesBySelfVehicle(req.params.selfVehicleId);
   res.send(result);
 });
 
@@ -69,9 +74,10 @@ module.exports = {
   getSelfVehicle,
   updateSelfVehicle,
   deleteSelfVehicle,
-  getDetailVehicles,
+  getDetailVehiclesBySelfVehicle,
   createDetailVehicle,
   getDetailVehicle,
   updateDetailVehicle,
+  getDetailVehicles,
   deleteDetailVehicle,
 };

@@ -73,7 +73,7 @@ const deleteHotelById = async (hotelId) => {
 
 const getRoomsByHotel = async (hotelId) => {
   const roomsId = await Hotel.findById(hotelId).select('rooms');
-  const rooms = await Room.find({ _id: roomsId.rooms });
+  const rooms = await Room.find({ _id: roomsId.rooms }).populate('idHotel').exec();
   return rooms;
 };
 
@@ -94,12 +94,14 @@ const createRoom = async (roomBody) => {
 };
 
 const getRooms = async () => {
-  const rooms = await Room.find().populate('idHotel').exec();
+  const rooms = await Room.find();
   return rooms;
 };
 
 const getRoomById = async (id) => {
-  return Room.findById(id);
+  return Room.findById(id)
+    .populate({ path: 'idHotel', select: ['city', 'name', 'phone'] })
+    .exec();
 };
 
 const updateRoomById = async (roomId, updateBody) => {
