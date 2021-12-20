@@ -114,6 +114,8 @@ const getRooms = async (query) => {
         rooms = await Room.find().populate('idHotel');
       }
     }
+  } else {
+    rooms = await Room.find();
   }
   return rooms;
 };
