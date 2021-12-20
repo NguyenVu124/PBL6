@@ -98,7 +98,23 @@ const createRoom = async (roomBody) => {
 };
 
 const getRooms = async (query) => {
-  const rooms = await Room.find(query).populate('idHotel').exec();
+  let rooms = null;
+  if (Object.keys(query)[0] === 'sort') {
+    const type = Object.values(query)[0];
+    switch (type) {
+      case 'price-desc': {
+        rooms = await Room.find().sort({ price: 'desc' }).populate('idHotel').exec();
+        break;
+      }
+      case 'price-asc': {
+        rooms = await Room.find().sort({ price: 'asc' }).populate('idHotel').exec();
+        break;
+      }
+      default: {
+        rooms = await Room.find().populate('idHotel');
+      }
+    }
+  }
   return rooms;
 };
 
