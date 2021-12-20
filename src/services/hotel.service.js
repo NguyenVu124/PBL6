@@ -111,11 +111,11 @@ const getRooms = async (query) => {
         break;
       }
       default: {
-        rooms = await Room.find().populate('idHotel').exec();
+        rooms = await Room.find(query).populate('idHotel').exec();
       }
     }
   } else {
-    rooms = await Room.find().populate('idHotel').exec();
+    rooms = await Room.find(query).populate('idHotel').exec();
   }
   return rooms;
 };
