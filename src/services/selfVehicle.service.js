@@ -11,8 +11,8 @@ const getSelfVehicles = async (query) => {
   return selfVehicles;
 };
 
-const getDetailVehicles = async () => {
-  const detailVehicles = await DetailVehicle.find().populate('idSelfVehicle').exec();
+const getDetailVehicles = async (query) => {
+  const detailVehicles = await DetailVehicle.find(query).populate('idSelfVehicle').exec();
   return detailVehicles;
 };
 

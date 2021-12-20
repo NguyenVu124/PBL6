@@ -41,7 +41,7 @@ const createDetailVehicle = catchAsync(async (req, res) => {
 });
 
 const getDetailVehicles = catchAsync(async (req, res) => {
-  const result = await selfVehicleService.getDetailVehicles();
+  const result = await selfVehicleService.getDetailVehicles(req.query);
   res.send(result);
 });
 
