@@ -9,6 +9,11 @@ const createHotel = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(hotel);
 });
 
+const getHotelByUserId = catchAsync(async (req, res) => {
+  const result = await hotelService.getHotelByUserId(req.query.userId);
+  res.send(result);
+});
+
 const getHotels = catchAsync(async (req, res) => {
   const result = await hotelService.getHotels(req.query);
   res.send(result);
@@ -78,4 +83,5 @@ module.exports = {
   getRoom,
   updateRoom,
   deleteRoom,
+  getHotelByUserId,
 };

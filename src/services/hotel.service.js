@@ -6,6 +6,10 @@ const createHotel = async (hotelBody) => {
   return Hotel.create(hotelBody);
 };
 
+const getHotelByUserId = async (userId) => {
+  return Hotel.find({ idUser: userId });
+};
+
 const getHotels = async (query) => {
   let hotels = null;
   if (Object.keys(query)[0] === 'sort') {
@@ -135,4 +139,5 @@ module.exports = {
   getRoomById,
   updateRoomById,
   deleteRoomById,
+  getHotelByUserId,
 };
