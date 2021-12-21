@@ -46,8 +46,8 @@ const deleteSelfVehicleById = async (selfVehicleId) => {
 };
 
 const getDetailVehiclesBySelfVehicle = async (selfVehicleId) => {
-  const detailVehiclesId = await SelfVehicle.findById(selfVehicleId).select('detailVehicles');
-  const detailVehicles = await DetailVehicle.find({ _id: detailVehiclesId.detailVehicles }).populate('idSelfVehicle').exec();
+  const detailVehiclesId = await SelfVehicle.findById(selfVehicleId).select('vehicles');
+  const detailVehicles = await DetailVehicle.find({ _id: detailVehiclesId.vehicles }).populate('idSelfVehicle').exec();
   return detailVehicles;
 };
 
