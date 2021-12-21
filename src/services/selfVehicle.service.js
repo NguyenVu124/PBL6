@@ -68,9 +68,7 @@ const createDetailVehicle = async (detailVehicleBody) => {
 };
 
 const getDetailVehicleById = async (id) => {
-  return DetailVehicle.findById(id)
-    .populate({ path: 'idSelfVehicle', select: ['city', 'name', 'phone'] })
-    .exec();
+  return DetailVehicle.findById(id).populate('idSelfVehicle').exec();
 };
 
 const updateDetailVehicleById = async (detailVehicleId, updateBody) => {
