@@ -26,7 +26,7 @@ router
   .get(auth('manageHotels'), hotelController.getHotelByUserId);
 router.route('/').get(hotelController.getHotels);
 router
-  .route('/:hotelId')
+  .route('/:hotelId/detail')
   .get(hotelController.getHotel)
   .patch(auth('manageHotels'), upload.single('images'), hotelController.updateHotel)
   .delete(auth('manageHotels'), hotelController.deleteHotel);
