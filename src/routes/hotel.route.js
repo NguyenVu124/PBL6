@@ -248,7 +248,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /hotel/{hotelId}:
+ * /hotel/{hotelId}/detail:
  *   get:
  *     summary: Get a hotel
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
