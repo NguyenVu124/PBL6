@@ -8,7 +8,7 @@ const SelfVehicle = new mongoose.Schema({
   },
   phone: { type: String, trim: true },
   idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  feedBacks: [
+  feedbacks: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'FeedBack',
