@@ -11,7 +11,7 @@ const createBill = catchAsync(async (req, res) => {
 });
 
 const getBills = catchAsync(async (req, res) => {
-  const result = await billService.getBills(req.query);
+  const result = await billService.getBills(req.query, req.params.userId);
   res.send(result);
 });
 

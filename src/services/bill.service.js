@@ -18,8 +18,8 @@ const createBill = async (billBody) => {
   return Bill.create(billBody);
 };
 
-const getBills = async (query) => {
-  const bills = await Bill.find(query);
+const getBills = async (query, userId) => {
+  const bills = await Bill.find({ guest: userId });
   return bills;
 };
 
