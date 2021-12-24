@@ -4,7 +4,7 @@ const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.route('/:userId').get(billController.getBills).post(auth('manageBills'), billController.createBill);
+router.route('/:userId').get(auth('getBills'), billController.getBills).post(auth('manageBills'), billController.createBill);
 // router.route('/:userId').post(billController.createBill);
 
 router
