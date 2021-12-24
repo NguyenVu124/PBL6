@@ -230,5 +230,26 @@ module.exports = router;
  *       "400":
  *       "401":
  *       "403":
- *
+ *   get:
+ *     summary: Get restaurants by userId
+ *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
+ *     tags: [Restaurant]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User id
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *       "401":
+ *       "403":
+ *       "404":
  */
