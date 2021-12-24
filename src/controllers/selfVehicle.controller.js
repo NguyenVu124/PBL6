@@ -15,6 +15,11 @@ const getSelfVehicles = catchAsync(async (req, res) => {
   res.send(result);
 });
 
+const getSelfVehiclesByUserId = catchAsync(async (req, res) => {
+  const result = await selfVehicleService.getSelfVehiclesByUserId(req.params.userId);
+  res.send(result);
+});
+
 const getSelfVehicle = catchAsync(async (req, res) => {
   const selfVehicle = await selfVehicleService.getSelfVehicleById(req.params.selfVehicleId);
   if (!selfVehicle) {
@@ -80,4 +85,5 @@ module.exports = {
   updateDetailVehicle,
   getDetailVehicles,
   deleteDetailVehicle,
+  getSelfVehiclesByUserId,
 };

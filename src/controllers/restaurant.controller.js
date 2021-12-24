@@ -14,6 +14,11 @@ const getRestaurants = catchAsync(async (req, res) => {
   res.send(result);
 });
 
+const getRestaurantByUserId = catchAsync(async (req, res) => {
+  const result = await restaurantService.getRestaurantByUserId(req.params.userId);
+  res.send(result);
+});
+
 const getRestaurant = catchAsync(async (req, res) => {
   const restaurant = await restaurantService.getRestaurantById(req.params.restaurantId);
   if (!restaurant) {
@@ -73,4 +78,5 @@ module.exports = {
   getTable,
   updateTable,
   deleteTable,
+  getRestaurantByUserId,
 };

@@ -4,7 +4,10 @@ const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.route('/:userId').post(auth('manageSelfVehicles'), selfVehicleController.createSelfVehicle);
+router
+  .route('/:userId')
+  .post(auth('manageSelfVehicles'), selfVehicleController.createSelfVehicle)
+  .get(auth('manageSelfVehicles'), selfVehicleController.getSelfVehiclesByUserId);
 router.route('/').get(selfVehicleController.getSelfVehicles);
 router
   .route('/:selfVehicleId/detail')

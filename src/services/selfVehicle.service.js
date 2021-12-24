@@ -11,6 +11,10 @@ const getSelfVehicles = async (query) => {
   return selfVehicles;
 };
 
+const getSelfVehiclesByUserId = async (userId) => {
+  return SelfVehicle.find({ idUser: userId });
+};
+
 const getDetailVehicles = async (query) => {
   const detailVehicles = await DetailVehicle.find(query).populate('idSelfVehicle').exec();
   return detailVehicles;
@@ -104,4 +108,5 @@ module.exports = {
   getDetailVehicleById,
   updateDetailVehicleById,
   deleteDetailVehicleById,
+  getSelfVehiclesByUserId,
 };

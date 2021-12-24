@@ -11,6 +11,10 @@ const getRestaurants = async (query) => {
   return restaurants;
 };
 
+const getRestaurantByUserId = async (userId) => {
+  return Restaurant.find({ idUser: userId });
+};
+
 const getRestaurantById = async (id) => {
   return Restaurant.findById(id);
 };
@@ -98,4 +102,5 @@ module.exports = {
   getRoomById,
   updateRoomById,
   deleteRoomById,
+  getRestaurantByUserId,
 };
